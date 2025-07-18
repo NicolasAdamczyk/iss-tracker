@@ -1,0 +1,100 @@
+.expandable-icon-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    border: 2px solid white;
+    border-radius: 50px;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    padding: 0.75rem;
+    width: 3rem;
+    min-width: 3rem;
+    height: 3rem;
+    font-family: 'Foundry Context Medium', sans-serif;
+    font-size: 18px;
+    line-height: 25px;
+    transition: width 0.4s ease, padding 0.4s ease;
+    z-index: 1;
+    transform-origin: left;
+}
+
+.expandable-icon-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0%;
+    height: 100%;
+    background: white;
+    z-index: 0;
+    transition: width 0.3s ease;
+}
+
+.expandable-icon-btn:hover {
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1.5rem;
+    color: black;
+}
+
+.expandable-icon-btn:hover::before {
+    width: 100%;
+}
+
+.expandable-icon-btn .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.expandable-icon-btn .label {
+    white-space: nowrap;
+    opacity: 0;
+    margin-left: 0.5rem;
+    transform: translateX(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1;
+}
+
+.expandable-icon-btn:hover .label {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.expandable-icon-btn:hover .icon {
+    color: black;
+}
+
+/* Rectangle qui apparaît au clic, démarre à la taille du bouton */
+.expanded-content {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    z-index: 2;
+
+    /* Animation scale from 0 to 1 */
+    animation: expandRect 0.4s ease forwards;
+    transform-origin: top left;
+}
+
+/* Keyframes pour scale-up */
+@keyframes expandRect {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

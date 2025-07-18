@@ -1,0 +1,182 @@
+.left-panel {
+    top: 50%;
+    left: 0;
+    border: 2px solid white;
+    border-radius: 50px;
+    background: rgba(0,0,0,0.6);
+    padding: 1.5rem 2rem;
+    opacity: 0;
+
+    width: auto;
+    max-width: 500px;
+    max-height: 80vh;
+    box-sizing: border-box;
+
+    transition: opacity 0.5s ease;
+    transform-origin: center;
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+}
+
+.left-panel.visible {
+    animation: tilt-in-fwd-top 0.3s ease forwards;
+}
+
+.left-panel.exiting {
+    animation: tilt-out-bck-top 0.3s ease forwards;
+}
+
+.left-panel-content {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.4s;
+}
+
+.left-panel.visible .left-panel-content {
+    opacity: 1;
+    animation: tilt-in-fwd-tl 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Animations */
+@-webkit-keyframes tilt-in-fwd-top {
+    0% {
+        -webkit-transform: rotateX(35deg) translateY(-300px) skewY(-10deg);
+        transform: rotateX(35deg) translateY(-300px) skewY(-10deg);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: rotateX(0deg) translateY(0) skewY(0deg);
+        transform: rotateX(0deg) translateY(0) skewY(0deg);
+        opacity: 1;
+    }
+}
+@keyframes tilt-in-fwd-top {
+    0% {
+        transform: rotateX(35deg) translateY(-300px) skewY(-10deg);
+        opacity: 0;
+    }
+    100% {
+        transform: rotateX(0deg) translateY(0) skewY(0deg);
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes tilt-out-bck-top {
+    0% {
+        -webkit-transform: rotateX(0deg) translateY(0) skewY(0deg);
+        transform: rotateX(0deg) translateY(0) skewY(0deg);
+        opacity: 1;
+    }
+    100% {
+        -webkit-transform: rotateX(35deg) translateY(-300px) skewY(-10deg);
+        transform: rotateX(35deg) translateY(-300px) skewY(-10deg);
+        opacity: 0;
+    }
+}
+@keyframes tilt-out-bck-top {
+    0% {
+        transform: rotateX(0deg) translateY(0) skewY(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: rotateX(35deg) translateY(-300px) skewY(-10deg);
+        opacity: 0;
+    }
+}
+
+.left-panel h2 {
+    font-family: 'Foundry Context Bold', sans-serif;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    /*align-self: center;*/
+}
+
+/* Prefixed classes without double 'panel' */
+.left-panel-section {
+    margin-bottom: 1rem;
+    font-family: 'Foundry Context Medium', sans-serif;
+}
+
+.left-panel-section-title {
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.left-panel-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.left-panel-latlon-section {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.left-panel-latlon-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.left-panel-latlon-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: stretch; /* Important for full height */
+}
+
+.left-panel-unit-separator {
+    border-left: 1px solid #fff;
+    width: 1px;
+    align-self: stretch; /* makes it take full height of siblings */
+    opacity: 0.5;
+}
+
+.left-panel-unit-small {
+    font-size: 1rem;
+    color: #ccc;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1280px) {
+    .left-panel {
+        width: 100%;
+        max-width: none;
+        max-height: 80vh;
+    }
+    .left-panel-latlon-section {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .left-panel-unit-separator {
+        display: none;
+    }
+
+    .left-panel h2 {
+        font-size: 1rem;
+    }
+
+    /* Nouvelle règle pour réduire la taille du texte général */
+    .left-panel-content {
+        font-size: 0.85rem; /* ou 85% de la taille normale */
+    }
+
+    /* Si tu veux aussi réduire la taille des titres de sections */
+    .left-panel-section-title {
+        font-size: 0.9rem;
+    }
+
+    /* Tu peux aussi réduire un peu les tailles dans les .left-panel-row */
+    .left-panel-row span {
+        font-size: 0.85rem;
+    }
+}

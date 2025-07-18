@@ -1,0 +1,176 @@
+Noté le dimanche 06/07 : 
+	- Définir les sections
+	- Definir les components de l'UI (button etc..)
+	- Il faudra utiliser la library "npm i react responsive"
+	- Utiliser gsap pour les animations de text
+	- utiliser react countup (pour faire une animation de chiffre qui croit)
+
+Vendredi 18/07:
+    - Finir de modulariser et commenter tout le code
+    - Rendre responsive du mieux que possible les panels
+    - Réparer le panel du live stream
+
+    - Mise en ligne du site sur GitHub : https://www.youtube.com/watch?v=ziPzOp6j0Oo&ab_channel=%C3%89coleduWeb (V1)
+
+    - Faire la vidéo computer vision
+
+    - Mettre a jour les icones
+    - Mettre en ordres le contenu des panels (les informations doivent être en anglais)
+        - Left Panel
+        - Center Panel
+            - Information de passage à gauche
+            - Informations météo et visibilité à droite
+            - Découper par un trait gris fin
+
+    - Mettre donc l'iss a sa taille réelle lorsque je le focus
+
+    - Ajouter des animations gsap à chaque composant (détailler la liste ici)
+
+
+
+    - Faire l'écran de chargement sur fond blanc pour une variance de couleurs
+
+3D : 
+
+- Interaction avec la terre (Objectif : faire en sorte d'écrire sur l'ISS pourra être visible d'une ville ou pas) : 
+    - Afficher les grandes villes (capitales ou autres si c'est facile) sur les parties du globe orientés vers la caméra
+    - Afficher les informations principales de cette ville (nottement sur le ciel est dégagé ou pas, pour savoir si il sera possible de voir l'iss, afficher un pourcentage de chance)
+    - Ajouter en bas des pays une petite information (une date/Fait historique ou quoi en rapport avec ce pays et le spatial)
+
+UI générale :
+    - 0/ Landing Page
+        -
+    - 1/ Section Home (Tracker)
+        - Top :
+            - Logo, Heure GMT
+        - Left (A voir) : Panneau (Coordonnées, Vitesse, Period, Pays de survol, un bouton (see more))
+            - Lorsque on clique sur (see more) : élévation du soleil, temperature intérieure, prochaine orbite complète, informations sur les vents solaires (Vitesse, densité, temperature(K), direction)
+        - Right (A voir) : Afficher les zones de l'iss, voir les zones chaudes et froides actuels, conditions solaires (éclairement, vents solaires, activité géomagnétique), Toggle des lignes imaginaires, marquer si l'iss est côté soleil ou pas, nombre de satelittes autour de la terre
+        - Bottom : Focus Terre, Focus ISS, Timeline (-1h/+1h), zoom, dezoom, flèche de descente à la section suivante
+    - 2/ Section d'analyse & statistique
+        - Orbitalitycs :
+            - Graphe : Altitude vs Temps : montrer les micro-variations d'altitude de l'ISS (oscille entre 408 – 420 km)
+            - Graphe : Suivi des petites variations de vitesse orbitale (~27 600 km/h). A quelle heure, quelle vitesse était mesurée ?
+            - Graphe : Période orbitrale vs Temps (Le temps nécessaire pour faire un tour autour de la Terre : ~92 min. Affiche s’il y a eu une variation dans cette durée au fil des heures.)4
+        - Rankings :
+            - Classement des pays les plus survolés (recalculé toutes les 24h)
+            - Classement des villes les plus survolés (recalculé toutes les 24h)
+
+        -
+    - 3/ Actualités spatiales
+        - Liens (https://spaceflightnewsapi.net/, voir avec chatgpt)
+        - 8 actualités récentes (mise à jour toutes les 3h) sur l'iss provenant de n'importe quel média du monde
+            - Bloc avec image, description, bouton voir plus
+    - 4/ A propos
+        - Ma photo, ma description (études, passion pour la 3D/le spatial/l'IA, mes réseaux)
+        - Footer : tous droits réservés...
+
+    - 5/ Section supplémentaire : "Explore The ISS" (Visualisation de l'ISS (haute qualité) et annotation des différentes zones)
+        - Module Zvezda, Laboratoire Destiny, Cupola, Docking Port, Panneaux solaires, EVA Hatch, points d'observations, port d'arrimage, Dragon, Soyuz, Cygnus
+
+
+
+
+UI : 
+- Commencer l'UI (regarder et enregistrer des références)
+    -   Liste (non exhaustive) des éléments UI : 
+        - Bouton de zoom
+        - Bouton de dezoom
+        - Focus ISS
+        - Focus Terre
+        - Rectangle avec (Lattitude, Longitude, Altitude, Vitesse (mph et km/h), Heure GMT, pays au dessus duquel il se trouv, afficher également les coordonnées geographie (Nord, Est..), élévation du soleil (voir c'est quoi))
+            - Afficher Metric/Imperial (pour faire la différence entre les N, W, lattitudes tout ça en gros)
+        - Afficher la prochaine orbit complète (dans combien de temps et il sera quelle heure)
+        - Afficher la temperature (voir en détail comment ca marche)
+            - Temperature intérieur en Live (non communiqué, donc impossible), mais je peux quand meme écrire que c'est entre 22°C et 24°C
+            - Afficher les zones chaud (en orange) et froides (en bleu) de l'iss en direct, et préciser quels sont les temperatures de ces zones
+        - Voir l'iss en Live Video (live youtube de la NASA)
+        - A propos de moi
+        - Informations supplémentaires
+            - Nombres de sattelites en direct autour de la terre
+            - 
+        - Conditions solaires (éclairement, vents solaires, activité géomagnétique) via NOAA ou Space Weather API — évoqué dans Devpost
+        - Slider temporel pour faire glisser l'ISS dans le future ou le passé
+        - Ajouter des infos bulles random (sur la culture G de l'ISS, certaines petites informations qui pop comme ca, on pourra le désactiver (toutes les 5 minutes))
+        - Voir les actualités spatiales
+        - Activer l'affichage des lignes imaginaires (greenwitch, cancer, capricorne..., afficher toutes les informations en rapport avec ca sur le globe)
+        - Marquer si l'iss est côté soleil ou pas
+        - Mode Plein écran
+
+
+Plus Tard : 
+
+- Refaire la ligne directrice de 0
+- Mettre une vrai texture du soleil
+
+
+
+
+
+
+Projet React Three Fiber (R3F) — Gestion du focus Terre / ISS
+Je travaille sur un projet React Three Fiber où la Station Spatiale Internationale (ISS) orbite en temps réel autour de la Terre. La scène 3D contient donc deux objets principaux : la Terre et l’ISS.
+
+Je souhaite implémenter un système de focus qui permette de basculer la caméra entre la Terre et l’ISS via deux boutons (« Focus Terre » et « Focus ISS »).
+Comportement attendu selon le focus sélectionné
+Focus Terre
+
+    La caméra tourne librement autour de la Terre avec des rotations fluides et naturelles.
+
+    Le zoom est limité :
+
+        L’utilisateur ne doit pas pouvoir dézoomer trop loin (au risque de perdre la Terre dans le vide).
+
+        Il ne doit pas pouvoir zoomer trop près (pour éviter que la caméra traverse la Terre).
+
+    Ces seuils de zoom minimum et maximum doivent être configurables dynamiquement.
+
+    La Terre a une échelle fixe (par exemple scale = 1 ou 2).
+
+    La caméra cible toujours le centre de la Terre.
+
+Focus ISS
+
+    L’ISS change d’échelle pour prendre sa taille réelle, bien plus petite que dans le focus Terre (par exemple, la scale passe de 0.1 à environ 0.001).
+
+    La caméra s’adapte à ce changement d’échelle :
+
+        Elle se place proche de l’ISS, pour permettre une immersion réaliste à ses côtés.
+
+        La caméra est orientée de façon à voir la Terre en dessous de l’ISS, car l’ISS est toujours au-dessus de la Terre.
+
+    La limite de zoom est différente, adaptée à cette nouvelle échelle.
+
+    Un effet de profondeur de champ (Depth of Field) est activé lors du focus ISS pour renforcer le réalisme et l’immersion.
+
+    La caméra ne doit jamais traverser la Terre ou l’ISS, et éviter tout artefact graphique dû au changement d’échelle.
+
+    La cible de la caméra est l’ISS, et la caméra regarde également vers la Terre.
+
+Transitions entre focus Terre et ISS
+
+    Le passage d’un focus à l’autre doit se faire par une transition fluide et progressive (interpolation de la position et de la rotation de la caméra).
+
+    Aucune coupure visuelle ou saut brutal ne doit se produire.
+
+    La caméra ne doit jamais traverser la Terre pendant la transition.
+
+    Il faut éviter les bugs graphiques comme des effets de clipping, des artefacts de scaling, ou des sauts de position.
+
+    La durée de la transition doit être suffisamment longue pour être agréable (par exemple 1.5 secondes).
+
+    Le changement d’échelle de l’ISS doit se faire en douceur pour éviter un effet de “pop” visuel.
+
+Points techniques / recommandations
+
+    La caméra est contrôlée via OrbitControls ou un système similaire.
+
+    Le zoom/dézoom peut être linéaire ou exponentiel, mais doit rester naturel et fluide.
+
+    La rotation autour de la Terre peut rester libre ou légèrement contrainte pour éviter les angles peu pratiques.
+
+    Le seuil de zoom minimum et maximum pour chaque focus doit pouvoir être modifié dynamiquement via des paramètres.
+
+    Lors du focus ISS, l’orientation de la caméra doit être ajustée pour garder la Terre visible en dessous, et éviter des angles inutiles.
+
+    Le post-traitement (notamment Depth of Field) doit être activé uniquement en mode focus ISS.
